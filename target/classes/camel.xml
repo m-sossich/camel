@@ -1,0 +1,25 @@
+<beans
+   xmlns="http://www.springframework.org/schema/beans"  
+   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+   xsi:schemaLocation="
+     http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+
+	<camelContext id="camel" xmlns="http://camel.apache.org/schema/spring">
+		<route>
+			<from uri="activemq:queue:Test.camel"/>
+			<choice>
+				<when>
+					<simple>${headers.queueId} == '2'</simple>
+					<to uri="activemq:queue:Test.queue1"/>
+				</when>
+				<when>
+					<simple>${headers.queueId} == '1'</simple>
+					<to uri="activemq:queue:Test.queue2"/>
+				</when>
+			</choice>			
+		</route>
+	</camelContext>
+
+</beans>
